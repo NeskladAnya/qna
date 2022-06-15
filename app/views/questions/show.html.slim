@@ -1,0 +1,14 @@
+html
+  head
+    h1
+      = question.title
+  body
+    p
+      = question.body
+    - if question.answers.exists?
+      h2
+        = 'All answers'
+      p
+        = render question.answers
+    p
+      = render 'answers/form'

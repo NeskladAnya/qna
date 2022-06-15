@@ -4,6 +4,7 @@ feature 'A user can view all existing questions', %q{
   Given I'm a user
   When I'm on the questions page
   Then I should see all existing questions
+  And be able to navigate to any question
 } do
 
   describe 'Questions exist' do
@@ -13,6 +14,13 @@ feature 'A user can view all existing questions', %q{
       visit questions_path
       
       expect(page).to have_content question.title
+    end
+
+    scenario 'a user navigates to the question page' do
+      visit questions_path
+      click_link question.title
+
+      expect(page).to have_content question.body
     end
   end
 

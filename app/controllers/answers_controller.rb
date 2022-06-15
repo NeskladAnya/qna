@@ -1,17 +1,13 @@
 class AnswersController < ApplicationController
-  before_action :find_question, only: %i[new create]
-  
-  def new
-    @answer = @question.answers.new
-  end
+  before_action :find_question
 
   def create
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @question
     else
-      render :new
+      redirect_to @question
     end
   end
 

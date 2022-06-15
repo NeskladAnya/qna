@@ -1,7 +1,10 @@
 html
+  head
+    h1
+      | All questions
   body
     - unless @questions.empty?
       = render @questions
     - else
-      p
+      h1
         | No questions found
