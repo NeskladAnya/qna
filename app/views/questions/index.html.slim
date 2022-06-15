@@ -1,0 +1,7 @@
+html
+  body
+    - unless @questions.empty?
+      = render @questions
+    - else
+      p
+        | No questions found
