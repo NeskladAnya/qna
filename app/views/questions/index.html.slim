@@ -3,6 +3,9 @@ html
     h1
       | All questions
   body
+    - if user_signed_in?
+      = link_to 'Ask question', new_question_path
+      
     - unless @questions.empty?
       = render @questions
     - else
