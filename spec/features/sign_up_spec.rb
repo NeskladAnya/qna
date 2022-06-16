@@ -14,7 +14,7 @@ feature 'A user can sign up', %q{
       fill_in 'Password', with: '12345678'
       fill_in 'Password confirmation', with: '12345678'
 
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content 'Welcome! You have signed up successfully.'
     end
@@ -29,13 +29,13 @@ feature 'A user can sign up', %q{
       fill_in 'Password', with: user.password
       fill_in 'Password confirmation', with: user.password_confirmation
 
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content 'Email has already been taken'
     end
 
     scenario 'fields are empty' do
-      click_on 'Sign up'
+      click_button 'Sign up'
 
       expect(page).to have_content "Email can't be blank"
       expect(page).to have_content "Password can't be blank"
@@ -44,7 +44,7 @@ feature 'A user can sign up', %q{
     scenario 'the user is already signed in' do
       sign_in(user)
       visit new_user_registration_path
-      
+
       expect(page).to have_content 'You are already signed in.'
     end
   end
