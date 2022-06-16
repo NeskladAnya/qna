@@ -10,5 +10,7 @@ html
         = 'All answers'
       p
         = render question.answers
-    p
-      = render 'answers/form'
+    
+    -if user_signed_in?
+      p
+        = render 'answers/form'

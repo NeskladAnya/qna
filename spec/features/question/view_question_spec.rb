@@ -17,10 +17,6 @@ feature 'A user can view a question', %q{
     expect(page).to have_content question.body
   end
 
-  scenario 'A user sees the Add new answer form' do
-    expect(page).to have_button 'Add answer'
-  end
-
   describe 'The question has answers' do
     given!(:answers) { create_list(:answer, 2, question: question ) }
 

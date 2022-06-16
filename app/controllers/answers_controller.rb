@@ -3,9 +3,10 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.author = current_user
 
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: 'Answer added'
     else
       redirect_to @question
     end
