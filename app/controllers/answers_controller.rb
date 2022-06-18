@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     @question = Question.find(params[:question_id])
 
@@ -14,9 +16,13 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find(params[:id])
-    @answer.destroy
 
-    redirect_to @answer.question, notice: 'Answer deleted'
+    if current_user.author?(@answer)
+      @answer.destroy
+      redirect_to @answer.question, notice: 'Answer deleted'
+    else
+      redirect_to @answer.question, alert: 'Answer cannot be deleted'
+    end
   end
 
   private
