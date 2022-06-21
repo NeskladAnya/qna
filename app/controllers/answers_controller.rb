@@ -3,14 +3,11 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
+    @answer = @question.answers.create(answer_params)
 
-    @answer = @question.answers.new(answer_params)
     @answer.author = current_user
-
     if @answer.save
-      redirect_to @question, notice: 'Answer added'
-    else
-      redirect_to @question
+      redirect_to question_path(@question), notice: 'Answer added'
     end
   end
 

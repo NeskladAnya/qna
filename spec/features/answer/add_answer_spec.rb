@@ -9,9 +9,9 @@ feature 'An authorized user can add a new answer to the question', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question, author: user) }
 
-  describe 'An authorized user' do
+  describe 'An authorized user', js: true do
 
-    background do 
+    background do
       sign_in(user)
       visit question_path(question)
     end
@@ -26,7 +26,7 @@ feature 'An authorized user can add a new answer to the question', %q{
     scenario 'tries to save an invalid answer' do
       click_on 'Add answer'
   
-      expect(page).to_not have_content 'Answer added'
+      expect(page).to have_content "Body can't be blank"
     end
   end
 

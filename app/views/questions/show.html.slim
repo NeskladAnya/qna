@@ -1,22 +1,15 @@
-html
-  head
-    h1
-      = question.title
-  body
-    p
-      = question.body
-    - if question.answers.exists?
-      h2
-        = 'All answers'
-      p
-        = render question.answers
-    
-    -if user_signed_in?
-      p
-        = render 'answers/form'
+h1= question.title
 
-    -if current_user&.author?(question)
-      p
-        = link_to 'Delete question',
-                  question_path(@question),
-                  method: :delete
+p= question.body
+
+- if question.answers.exists?
+  h2 = 'All answers'
+  .answers
+    = render @question.answers
+
+- if user_signed_in?
+  p= render 'answers/form'
+  - if current_user&.author?(question)
+    p= link_to 'Delete question',
+                question_path(@question),
+                method: :delete
