@@ -1,1 +1,6 @@
 document.querySelector('.answer-errors').innerHTML = '<%= render 'shared/errors', resource: @answer %>';
+
+<% if @answer.persisted? %>
+  document.querySelector('.answers').insertAdjacentHTML('beforeend', '<%= j render @answer %>')
+  document.querySelector('#answer_body').value = ''
+<% end %>

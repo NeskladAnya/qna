@@ -6,9 +6,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.create(answer_params)
 
     @answer.author = current_user
-    if @answer.save
-      redirect_to question_path(@question), notice: 'Answer added'
-    end
+    @answer.save
   end
 
   def destroy

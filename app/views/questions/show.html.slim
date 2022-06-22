@@ -4,8 +4,9 @@ p= question.body
 
 - if question.answers.exists?
   h2 = 'All answers'
-  .answers
-    = render @question.answers
+
+.answers
+  = render @question.answers
 
 - if user_signed_in?
   p= render 'answers/form'
