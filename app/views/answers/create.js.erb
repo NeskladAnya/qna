@@ -2,5 +2,5 @@ document.querySelector('.answer-errors').innerHTML = '<%= render 'shared/errors'
 
 <% if @answer.persisted? %>
   document.querySelector('.answers').insertAdjacentHTML('beforeend', '<%= j render @answer %>')
-  document.querySelector('#answer_body').value = ''
+  document.querySelector('.new-answer #answer_body').value = ''
 <% end %>

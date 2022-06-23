@@ -9,6 +9,15 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
+  def update
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+
+    if current_user.author?(@answer)
+      @answer.update(answer_params)
+    end
+  end
+
   def destroy
     @answer = Answer.find(params[:id])
 
