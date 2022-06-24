@@ -77,4 +77,30 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let(:user2) { create(:user) }
+    let!(:answer) { create(:answer, question: question, author: user) }
+
+    before { login(user) }
+
+    context 'the author is logged in' do
+      it 'deletes the answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
+      end
+
+      it 'renders an updated view' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to render_template :destroy
+      end 
+    end
+
+    context 'not the author is logged in' do
+      before { login(user2) }
+
+      it 'does not delete the answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
+      end
+    end
+  end
 end
