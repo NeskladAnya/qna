@@ -11,6 +11,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "answers"
+import "questions"
 
 Rails.start()
 Turbolinks.start()
