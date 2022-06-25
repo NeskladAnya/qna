@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
+  let(:user2) { create(:user) }
   let(:question) { create(:question, author: user) }
   let(:answer) { create(:answer, question: question, author: user) }
 
@@ -33,7 +34,6 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     let!(:answer) { create(:answer, question: question, author: user) }
-    let(:user2) { create(:user) }
 
     context 'with valid attributes' do
       it 'the author changes answer attributes' do
@@ -79,7 +79,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:user2) { create(:user) }
     let!(:answer) { create(:answer, question: question, author: user) }
 
     before { login(user) }
@@ -100,6 +99,35 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not delete the answer' do
         expect { delete :destroy, params: { id: answer }, format: :js }.to_not change(Answer, :count)
+      end
+    end
+  end
+
+  describe 'POST #set_best' do
+    context 'the author of the question is logged in' do
+      before do 
+        login(user)
+        post :set_best, params: { id: answer }, format: :js
+        question.reload
+      end
+
+      it 'sets the best answer' do
+        expect(question.best_answer).to eq answer
+      end
+
+      it 'renders the set-best view' do
+        expect(response).to render_template :set_best
+      end
+    end
+    
+    context 'not the author of the question is logged in' do
+      before { login(user2) }
+
+      it 'does not set the best answer' do
+        post :set_best, params: { id: answer }, format: :js
+        question.reload
+
+        expect(question.best_answer).to eq nil
       end
     end
   end

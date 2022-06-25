@@ -34,6 +34,8 @@ class AnswersController < ApplicationController
     if current_user.author?(@question)
       @question.update(best_answer: @answer)
     end
+
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   private

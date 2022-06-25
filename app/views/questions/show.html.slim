@@ -4,19 +4,13 @@
 .question-body
   p= question.body
 
-- if question.answers.exists?
-  h2= 'All answers'
-
-- if @best_answer.present?
-  .best-answer
-    h3= 'Best answer:'
-    = render @best_answer
-
-- if @other_answers.present?
-    h3= 'Other answers'
-
 .answers
-  = render @other_answers
+  .best-answer
+    - if @best_answer.present?
+        = render 'answers/best_answer', resource: @best_answer
+  .other-answers
+    - if @other_answers.present?
+        = render @other_answers
 
 - if user_signed_in?
   p= render 'answers/form'
