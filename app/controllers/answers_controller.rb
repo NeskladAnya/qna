@@ -27,6 +27,15 @@ class AnswersController < ApplicationController
     end
   end
 
+  def set_best
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+
+    if current_user.author?(@question)
+      @question.update(best_answer: @answer)
+    end
+  end
+
   private
   def answer_params
     params.require(:answer).permit(:body)
