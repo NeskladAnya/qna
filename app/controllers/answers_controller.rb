@@ -3,26 +3,39 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
+    @answer = @question.answers.create(answer_params)
 
-    @answer = @question.answers.new(answer_params)
     @answer.author = current_user
+    @answer.save
+  end
 
-    if @answer.save
-      redirect_to @question, notice: 'Answer added'
-    else
-      redirect_to @question
+  def update
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+
+    if current_user.author?(@answer)
+      @answer.update(answer_params)
     end
   end
 
   def destroy
     @answer = Answer.find(params[:id])
+    @question = @answer.question
 
     if current_user.author?(@answer)
       @answer.destroy
-      redirect_to @answer.question, notice: 'Answer deleted'
-    else
-      redirect_to @answer.question, alert: 'Answer cannot be deleted'
     end
+  end
+
+  def set_best
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+
+    if current_user.author?(@question)
+      @question.update(best_answer: @answer)
+    end
+
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   private

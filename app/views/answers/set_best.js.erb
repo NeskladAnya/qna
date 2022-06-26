@@ -1,0 +1,4 @@
+<% if @question.best_answer.present? %>
+  $('.best-answer').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>')
+  $('.other-answers').html('<%= j render @other_answers %>')
+<% end %>

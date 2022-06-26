@@ -1,22 +1,23 @@
-html
-  head
-    h1
-      = question.title
-  body
-    p
-      = question.body
-    - if question.answers.exists?
-      h2
-        = 'All answers'
-      p
-        = render question.answers
-    
-    -if user_signed_in?
-      p
-        = render 'answers/form'
+.question-title
+  h1= question.title
 
-    -if current_user&.author?(question)
-      p
-        = link_to 'Delete question',
-                  question_path(@question),
-                  method: :delete
+.question-body
+  p= question.body
+
+.answers
+  .best-answer
+    - if @best_answer.present?
+        = render 'answers/best_answer', resource: @best_answer
+  .other-answers
+    - if @other_answers.present?
+        = render @other_answers
+
+- if user_signed_in?
+  p= render 'answers/form'
+
+- if current_user&.author?(question)
+  p= link_to 'Edit question', '#', class: 'edit-question-link', data: {question_id: question.id }
+  p= render 'questions/form'
+  p= link_to 'Delete question',
+              question_path(@question),
+              method: :delete

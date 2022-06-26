@@ -12,13 +12,13 @@ feature 'The author of the answer can delete it', %q{
   given(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, question: question, author: user) }
 
-  scenario 'An author deletes the answer' do
+  scenario 'An author deletes the answer', js: true do
     sign_in(user)
     
     visit question_path(question)
     click_on 'Delete answer'
 
-    expect(page).to have_content 'Answer deleted'
+    expect(page).to_not have_content answer.body
   end
 
   scenario 'A user who is not the author tries to delete the question' do

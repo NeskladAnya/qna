@@ -18,11 +18,11 @@ feature 'A user can view a question', %q{
   end
 
   describe 'The question has answers' do
-    given!(:answers) { create_list(:answer, 2, question: question ) }
+    given!(:answer) { create(:answer, question: question ) }
 
     scenario 'a user sees question answers' do
       visit question_path(question)
-      expect(page).to have_content 'All answers'
+      expect(page).to have_content answer.body
     end
   end
 

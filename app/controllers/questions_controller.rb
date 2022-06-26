@@ -7,6 +7,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = question.answers.new
+
+    @best_answer = question.best_answer
+    @other_answers = question.answers.where.not(id: question.best_answer_id)
   end
 
   def new
@@ -27,10 +30,8 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
+    if current_user.author?(question)
+      question.update(question_params)
     end
   end
 
