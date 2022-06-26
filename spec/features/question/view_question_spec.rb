@@ -9,12 +9,18 @@ feature 'A user can view a question', %q{
 } do
 
   given(:question) { create(:question) }
-
-  background { visit question_path(question) }
+  given(:question2) { create(:question, with_attached_files:) }
 
   scenario 'A user sees the question info' do
+    visit question_path(question)
+
     expect(page).to have_content question.title
     expect(page).to have_content question.body
+  end
+
+  scenario 'A user sees the question attached file' do
+    visit question_path(question2)
+    expect(page).to have_link 'rails_helper.rb'
   end
 
   describe 'The question has answers' do
