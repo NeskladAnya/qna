@@ -8,17 +8,30 @@ feature 'An authorized user can create a new question', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'An authorized user creates a new question' do
-    sign_in(user)
+  describe 'An authorized user' do
+    background do
+      sign_in(user)
 
-    visit questions_path
-    click_on 'Ask question'
+      visit questions_path
+      click_on 'Ask question'
 
-    fill_in 'Title', with: 'Test title'
-    fill_in 'Body', with: 'Test body'
-    click_button 'Ask'
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Body', with: 'Test body'
+    end
 
-    expect(page).to have_content 'Question created'
+    scenario 'creates a new question without attached files' do
+      click_button 'Ask'
+
+      expect(page).to have_content 'Question created'
+    end
+
+    scenario 'creates a new question with attached files' do
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_button 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
   scenario 'An unauthorized user tries to create a new question' do
