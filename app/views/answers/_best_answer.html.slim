@@ -2,6 +2,9 @@
     h3= 'Best answer:'
     p= resource.body
 
+    .best-answer-files
+      = render 'shared/attachments', resource: resource
+
     - if current_user&.author?(resource)
         p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: resource.id }
         = form_with model: resource, class: 'hidden', html: { id: "edit-answer-#{resource.id}" }, local: false do |f|

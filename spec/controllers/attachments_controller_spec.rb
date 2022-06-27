@@ -8,12 +8,12 @@ RSpec.describe AttachmentsController, type: :controller do
     before { login(user) }
 
     it 'deletes the attached file' do
-      expect{ delete :destroy, params: { id: question.files.first } }.to change(ActiveStorage::Attachment, :count).by(-1)
+      expect{ delete :destroy, params: { id: question.files.first }, format: :js }.to change(ActiveStorage::Attachment, :count).by(-1)
     end
 
     it 'redirects to the question show view' do
-      delete :destroy, params: { id: question.files.first }
-      expect(response).to redirect_to question_path(question)
+      delete :destroy, params: { id: question.files.first }, format: :js
+      expect(response).to render_template :destroy
     end
   end
 end

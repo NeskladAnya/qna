@@ -1,6 +1,9 @@
 -if answer.persisted?
   p= answer.body
 
+  .answer-files
+    = render 'shared/attachments', resource: answer
+
   -if current_user&.author?(answer.question)
     p= link_to 'Best',
                 set_best_answer_path(answer),
@@ -17,3 +20,5 @@
                   answer_path(answer),
                   method: :delete,
                   remote: true
+
+hr

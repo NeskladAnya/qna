@@ -9,7 +9,7 @@ feature 'A user can view a question', %q{
 } do
 
   given(:question) { create(:question) }
-  given(:question2) { create(:question, with_attached_files:) }
+  given(:question2) { create(:question, :with_attached_files) }
 
   scenario 'A user sees the question info' do
     visit question_path(question)
