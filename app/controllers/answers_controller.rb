@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_question, only: %i[update destroy set_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -10,35 +11,36 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
-    @question = @answer.question
-
-    if current_user.author?(@answer)
-      @answer.update(answer_params)
+    if current_user.author?(answer)
+      answer.update(answer_params)
     end
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    @question = @answer.question
-
-    if current_user.author?(@answer)
-      @answer.destroy
+    if current_user.author?(answer)
+      answer.destroy
     end
   end
 
   def set_best
-    @answer = Answer.find(params[:id])
-    @question = @answer.question
-
     if current_user.author?(@question)
-      @question.update(best_answer: @answer)
+      @question.update(best_answer: answer)
     end
 
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
   private
+  def answer
+    @answer ||= params[:id] ? Answer.with_attached_files.find(params[:id]) : Answer.new
+  end
+
+  helper_method :answer
+
+  def find_question
+    @question = answer.question
+  end
+
   def answer_params
     params.require(:answer).permit(:body, files: [])
   end
