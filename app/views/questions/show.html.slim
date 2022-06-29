@@ -4,6 +4,11 @@
 .question-body
   p= question.body
 
+.question-files
+  = render 'shared/attachments', resource: @question
+
+hr
+
 .answers
   .best-answer
     - if @best_answer.present?

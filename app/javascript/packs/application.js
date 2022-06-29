@@ -12,6 +12,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "answers"
 import "questions"
+import "direct_uploads"
 
 Rails.start()
 Turbolinks.start()

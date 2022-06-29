@@ -1,0 +1,4 @@
+<% if !@attachment.persisted? %>
+  $('#file_link_<%= @attachment.id %>').remove()
+  $('#file_remove_link_<%= @attachment.id %>').remove()
+<% end %>

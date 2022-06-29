@@ -5,4 +5,5 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @question %>')
   $('.question-body p').text('<%= @question.body %>')
   $('form#edit-question-' + <%= @question.id %>).addClass('hidden')
   $('.edit-question-link').show()
+  $('.question-files').html('<%= j render 'shared/attachments', resource: @question %>')
 <% end %>

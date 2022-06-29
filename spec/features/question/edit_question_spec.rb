@@ -9,6 +9,7 @@ feature 'The author of the question can edit it', %q{
   given(:user) { create(:user) }
   given(:user2) { create(:user) }
   given!(:question) { create(:question, author: user) }
+  given(:question2) { create(:question, :with_attached_files, author: user) }
   
   describe 'An authorized user', js: true do
     scenario 'is the author of the question and edits it with valid attributes' do
@@ -45,11 +46,40 @@ feature 'The author of the question can edit it', %q{
       expect(page).to have_content "Body can't be blank"
     end
 
-    scenario 'is not the author of the answer and cannot edit it' do
+    scenario 'is the author of the question and edits it by attaching files' do
+      sign_in(user)
+      visit question_path(question)
+      click_on 'Edit question'
+
+      within '.question-edit-form' do
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_button 'Save'
+      end
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+    scenario 'is the author of the question and removes an attached file' do
+      sign_in(user)
+      visit question_path(question2)
+      
+      click_link 'Remove'
+      expect(page).to_not have_link 'rails_helper.rb'
+    end
+
+    scenario 'is not the author of the question and cannot edit it' do
       sign_in(user2)
       visit question_path(question)
 
       expect(page).to_not have_link 'Edit question'
+    end
+
+    scenario 'is not the author of the question and cannot remove an attached file' do
+      sign_in(user2)
+      visit question_path(question2)
+
+      expect(page).to_not have_link 'Remove'
     end
   end
 
