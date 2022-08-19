@@ -4,6 +4,8 @@
 // that code so it'll be compiled.
 
 //= require jquery3
+//= require popper
+//= require bootstrap-sprockets
 //= require_tree .
 
 import Rails from "@rails/ujs"
