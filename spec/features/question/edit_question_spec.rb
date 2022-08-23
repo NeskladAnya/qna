@@ -64,8 +64,10 @@ feature 'The author of the question can edit it', %q{
       sign_in(user)
       visit question_path(question2)
       
-      click_link 'Remove'
-      expect(page).to_not have_link 'rails_helper.rb'
+      within '.question-files' do
+        click_link 'Delete'
+        expect(page).to_not have_link 'rails_helper.rb'
+      end
     end
 
     scenario 'is not the author of the question and cannot edit it' do

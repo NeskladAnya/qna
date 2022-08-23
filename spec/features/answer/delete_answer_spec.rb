@@ -16,7 +16,7 @@ feature 'The author of the answer can delete it', %q{
     sign_in(user)
     
     visit question_path(question)
-    click_on 'Delete answer'
+    click_on 'Delete'
 
     expect(page).to_not have_content answer.body
   end
@@ -25,6 +25,6 @@ feature 'The author of the answer can delete it', %q{
     sign_in(user2)
     visit question_path(question)
 
-    expect(page).to_not have_content 'Delete answer'
+    expect(page).to_not have_content 'Delete'
   end
 end

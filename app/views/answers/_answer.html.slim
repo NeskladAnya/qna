@@ -1,29 +1,43 @@
 -if answer.persisted?
-  p= answer.body
+  li class="list-group-item" id="answer-#{answer.id}"
+      div class="row mb-3"
+        div class="col-8 d-flex justify-content-start align-items-center"
+          = answer.body
 
-  .answer-files
-    = render 'shared/attachments', resource: answer
+        div class="col-4 d-flex justify-content-evenly"
+          -if current_user&.author?(answer.question)
+            = link_to 'Best',
+                      set_best_answer_path(answer),
+                      method: :post,
+                      remote: true,
+                      class: "btn btn-success"
+          -if current_user&.author?(answer)
+            = link_to 'Edit',
+                      '#',
+                      id: "edit-answer-link",
+                      data: {answer_id: answer.id},
+                      class: "btn btn-primary edit-answer-link"
+            = link_to 'Delete',
+                      answer_path(answer),
+                      method: :delete,
+                      remote: true,
+                      class: "btn btn-danger"
 
-  -if current_user&.author?(answer.question)
-    p= link_to 'Best',
-                set_best_answer_path(answer),
-                method: :post,
-                remote: true
+      ul class="list-group"
+        .answer-files
+          = render 'shared/attachments', resource: answer
+      
+      -if current_user&.author?(answer)
+        = form_with model: answer, class: "hidden", html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+          .mb-3
+            = f.label :body, 'Answer', class: "form-label"
+            = f.text_area :body, class: "form-control"
 
-  -if current_user&.author?(answer)
-    p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id }
-    = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-      p
-        = f.label :body, 'Your answer'
-        = f.text_area :body
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true
-      p
-        = f.submit 'Save'
-    p= link_to 'Delete answer',
-                  answer_path(answer),
-                  method: :delete,
-                  remote: true
+          .mb-3
+            = f.file_field :files, multiple: true, class: "form-control"
 
-hr
+          .mb-3
+            = f.submit 'Save', class: "btn btn-primary"
+
+  
+    
