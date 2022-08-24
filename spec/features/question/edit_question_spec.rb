@@ -52,7 +52,7 @@ feature 'The author of the question can edit it', %q{
       click_on 'Edit question'
 
       within '.question-edit-form' do
-        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        attach_file ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
         click_button 'Save'
       end
 

@@ -2,20 +2,29 @@ body class="container"
   .question-title class="text-center"
     h1= question.title
 
-  .question-body class="border-bottom border-primary"
+  .question-body class="border-bottom border-primary mb-3"
     p
       em= question.body
 
+  div class="row mb-3"
+    - if current_user&.author?(question)
+        p= link_to 'Edit question',
+                   '#',
+                   class: 'edit-question-link btn btn-primary',
+                   data: {question_id: question.id }
+        = render 'questions/form'
+
+        p= link_to 'Delete question',
+                question_path(@question),
+                class: 'btn btn-danger',
+                method: :delete
+        
   .question-files
     = render 'shared/attachments', resource: @question
 
   .answers
-    -if @question.answers.count == 0
-      h2 class="text-center"
-        | No answers
-    -else
-      h2 class="text-center"
-        | Answers
+    h2 class="text-center"
+      | Answers
 
     ul class="list-group"
       .best-answer
@@ -27,10 +36,3 @@ body class="container"
 
   - if user_signed_in?
     p= render 'answers/form'
-
-  - if current_user&.author?(question)
-    p= link_to 'Edit question', '#', class: 'edit-question-link', data: {question_id: question.id }
-    p= render 'questions/form'
-    p= link_to 'Delete question',
-                question_path(@question),
-                method: :delete
