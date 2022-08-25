@@ -1,10 +1,10 @@
-- if user_signed_in?
-  p
-    = link_to 'Log out', destroy_user_session_path, method: :delete
-- else
-  table 
-    tr 
-      td
-        = link_to 'Sign up', new_user_registration_path
-      td
-        = link_to 'Log in', new_user_session_path
+nav class="navbar bg-light"
+  div class="container-fluid"
+    - if user_signed_in?
+        a 
+          = link_to 'Log out', destroy_user_session_path, method: :delete, class: "nav-link"
+    - else
+        a
+          = link_to 'Sign up', new_user_registration_path, class: "nav-link"
+        a
+          = link_to 'Log in', new_user_session_path, class: "nav-link"

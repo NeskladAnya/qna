@@ -1,7 +1,7 @@
 - if resource.files.attached?
   - resource.files.each do |file|
     li class="list-group-item" id="file_link_#{file.id}"
-      .row
+      .row class="mb-3"
         div class="col-8 d-flex justify-content-start align-items-center"
           = link_to file.filename.to_s,
                          url_for(file),

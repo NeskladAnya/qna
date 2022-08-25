@@ -36,3 +36,6 @@ body class="container"
 
   - if user_signed_in?
     p= render 'answers/form'
+
+  .nav class="nav"
+    = link_to 'Back', questions_path, class: "btn btn-secondary"
