@@ -14,11 +14,12 @@ feature 'A user can view all existing questions', %q{
       visit questions_path
       
       expect(page).to have_content question.title
+      expect(page).to have_link 'Show'
     end
 
     scenario 'a user navigates to the question page' do
       visit questions_path
-      click_link question.title
+      click_link 'Show'
 
       expect(page).to have_content question.body
     end

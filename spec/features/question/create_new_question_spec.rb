@@ -26,7 +26,7 @@ feature 'An authorized user can create a new question', %q{
     end
 
     scenario 'creates a new question with attached files' do
-      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_button 'Ask'
 
       expect(page).to have_link 'rails_helper.rb'

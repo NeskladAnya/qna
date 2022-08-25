@@ -1,28 +1,41 @@
-.question-title
-  h1= question.title
+body class="container"
+  .question-title class="text-center"
+    h1= question.title
 
-.question-body
-  p= question.body
+  .question-body class="border-bottom border-primary mb-3"
+    p
+      em= question.body
 
-.question-files
-  = render 'shared/attachments', resource: @question
+  div class="row mb-3"
+    - if current_user&.author?(question)
+        p= link_to 'Edit question',
+                   '#',
+                   class: 'edit-question-link btn btn-primary',
+                   data: {question_id: question.id }
+        = render 'questions/form'
 
-hr
+        p= link_to 'Delete question',
+                question_path(@question),
+                class: 'btn btn-danger',
+                method: :delete
+        
+  .question-files
+    = render 'shared/attachments', resource: @question
 
-.answers
-  .best-answer
-    - if @best_answer.present?
-        = render 'answers/best_answer', resource: @best_answer
-  .other-answers
-    - if @other_answers.present?
-        = render @other_answers
+  .answers
+    h2 class="text-center"
+      | Answers
 
-- if user_signed_in?
-  p= render 'answers/form'
+    ul class="list-group"
+      .best-answer
+        - if @best_answer.present?
+            = render 'answers/best_answer', resource: @best_answer
+      .other-answers
+        - if @other_answers.present?
+            = render @other_answers
 
-- if current_user&.author?(question)
-  p= link_to 'Edit question', '#', class: 'edit-question-link', data: {question_id: question.id }
-  p= render 'questions/form'
-  p= link_to 'Delete question',
-              question_path(@question),
-              method: :delete
+  - if user_signed_in?
+    p= render 'answers/form'
+
+  .nav class="nav"
+    = link_to 'Back', questions_path, class: "btn btn-secondary"

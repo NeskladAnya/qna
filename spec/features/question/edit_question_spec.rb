@@ -52,7 +52,7 @@ feature 'The author of the question can edit it', %q{
       click_on 'Edit question'
 
       within '.question-edit-form' do
-        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        attach_file ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
         click_button 'Save'
       end
 
@@ -64,8 +64,10 @@ feature 'The author of the question can edit it', %q{
       sign_in(user)
       visit question_path(question2)
       
-      click_link 'Remove'
-      expect(page).to_not have_link 'rails_helper.rb'
+      within '.question-files' do
+        click_link 'Delete'
+        expect(page).to_not have_link 'rails_helper.rb'
+      end
     end
 
     scenario 'is not the author of the question and cannot edit it' do

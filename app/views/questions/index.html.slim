@@ -1,14 +1,16 @@
 html
-  head
-    h1
+  header
+    h1 class="text-center"
       | All questions
-  body
+
+  body class="container"
     - unless @questions.empty?
-      = render @questions
+      table class="table"
+        tbody
+          = render @questions
     - else
-      h1
+      h1 class="text-center"
         | No questions found
 
     - if user_signed_in?
-      = link_to 'Ask question', new_question_path
-      
+        = link_to 'Ask question', new_question_path, class: "btn btn-success"

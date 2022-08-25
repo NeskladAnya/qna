@@ -3,14 +3,16 @@
 
 .question-edit-form
   = form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" }, local: false do |f|
-    p
-      = f.label :title
-      = f.text_field :title
-    p
-      = f.label :body
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-    p
-      = f.submit 'Save'
+    .mb-3
+      = f.label :title, class: "form-label"
+      = f.text_field :title, class: "form-control"
+    
+    .mb-3
+      = f.label :body, class: "form-label"
+      = f.text_area :body, class: "form-control"
+    
+    .mb-3
+      = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+    
+    .mb-3
+      = f.submit 'Save', class: "btn btn-primary"
