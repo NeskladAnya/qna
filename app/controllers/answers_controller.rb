@@ -25,6 +25,9 @@ class AnswersController < ApplicationController
   def set_best
     if current_user.author?(@question)
       @question.update(best_answer: answer)
+      if @question.reward.present?
+        @question.reward.update(answer: answer, user: current_user)
+      end
     end
 
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)

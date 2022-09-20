@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
+  has_one :reward
   belongs_to :question
   belongs_to :author, class_name: 'User'
 

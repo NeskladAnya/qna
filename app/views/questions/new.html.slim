@@ -11,7 +11,18 @@ body class="container"
       = f.label :body, class: "form-label"
       = f.text_area :body, class: "form-control"
     .mb-3
-      = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
+      = f.file_field :files, multiple: true, direct_upload: true, class: "form-control question-files"
+
+    h2
+      | Create a reward
+      
+    = f.fields_for :reward do |r|
+      .mb-3 
+        = r.label :name, class: "form-label"
+        = r.text_field :name, class: "form-control"
+      .mb-3 
+        = r.file_field :image, direct_upload: true, class: "form-control reward-file"
+    
     .mb-3
       = f.submit 'Ask', class: "btn btn-primary"
 
