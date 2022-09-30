@@ -27,6 +27,10 @@
         .answer-files
           = render 'shared/attachments', resource: answer
       
+      ul class="list-group"
+        .answer-links 
+          = render 'shared/links', resource: answer
+      
       -if current_user&.author?(answer)
         = form_with model: answer, class: "hidden", html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
           .mb-3
@@ -35,6 +39,11 @@
 
           .mb-3
             = f.file_field :files, multiple: true, class: "form-control"
+
+          h3
+            | Links 
+          
+          = render 'links/link', f: f
 
           .mb-3
             = f.submit 'Save', class: "btn btn-primary"

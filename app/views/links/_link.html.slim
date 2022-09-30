@@ -1,0 +1,11 @@
+= f.fields_for :links do |l|
+  .mb-3
+    = l.label :name, 'Link name', class: "form-label"
+    = l.text_field :name, class: "form-control"
+
+  .mb-3
+    = l.label :url, 'URL', class: "form-label"
+    = l.text_field :url, class: "form-control"
+
+div class="mb-3 add-link"
+  = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields', class: "btn btn-success"

@@ -22,7 +22,11 @@ body class="container"
         = r.text_field :name, class: "form-control"
       .mb-3 
         = r.file_field :image, direct_upload: true, class: "form-control reward-file"
-    
+    h3
+      | Add links 
+          
+    = render 'links/link', resource: @question, f: f
+
     .mb-3
       = f.submit 'Ask', class: "btn btn-primary"
 
