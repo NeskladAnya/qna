@@ -13,6 +13,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_links do
+      after(:create) do |answer|
+        create(:link, linkable: answer)
+      end
+    end
+
     trait :invalid do
       body { nil }
     end

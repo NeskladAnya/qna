@@ -31,7 +31,7 @@ feature 'An author of the question can select one best answer', %q{
       click_on 'Best'
 
       fill_in 'answer[body]', with: 'New answer'
-      click_on 'Save'
+      click_on 'Add answer'
 
       within '.other-answers' do
         click_on 'Best'

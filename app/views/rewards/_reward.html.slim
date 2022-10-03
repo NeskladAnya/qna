@@ -1,0 +1,9 @@
+tr
+  td
+    = reward.name
+  td
+    -if reward.image.present? 
+      = image_tag reward.image, size: "100x100"
+  td 
+    = link_to reward.answer.question.title, question_path(reward.question)
+

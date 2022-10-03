@@ -1,0 +1,11 @@
+body class="container"
+  h1 class="text-center"
+    | Rewards
+
+  .rewards
+    table class="table"
+        tbody
+          = render @rewards
+  
+  .nav class="nav"
+    = link_to 'Back', root_path, class: "btn btn-secondary"

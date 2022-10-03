@@ -10,5 +10,7 @@
   .mb-3
     = f.file_field :files, multiple: true, direct_upload: true, class: "form-control"
 
+  = render 'links/link', resource: @answer, f: f
+
   .mb-3
-    = f.submit 'Save', class: "btn btn-primary add-answer"
+    = f.submit 'Add answer', class: "btn btn-primary add-answer"
