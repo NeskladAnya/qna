@@ -2,9 +2,12 @@ body class="container"
   .question-title class="text-center"
     h1= question.title
 
-  .question-body class="border-bottom border-primary mb-3"
-    p
-      em= question.body
+  div class="question-body row mb-3"
+    div class="col-11 d-flex justify-content-start border-bottom border-primary"
+      p
+        em= question.body
+
+    = render 'shared/likes', resource: @question
 
   .question-links
     = render 'shared/links', resource: @question
