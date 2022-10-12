@@ -1,10 +1,12 @@
 require 'rails_helper'
+require Rails.root.join('spec/models/concerns/likeable_spec.rb')
 
 RSpec.describe Answer, type: :model do
   it { should belong_to(:author).class_name('User') }
   it { should belong_to :question }
 
   it { should have_many(:links).dependent(:destroy) }
+  it { should have_many(:likes).dependent(:destroy) }
   it { should have_one :reward }
   
   it { should validate_presence_of :body }
@@ -15,4 +17,6 @@ RSpec.describe Answer, type: :model do
   it 'has several attached files' do
     expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
+
+  it_behaves_like 'likeable'
 end
