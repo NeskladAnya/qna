@@ -1,11 +1,12 @@
-div class="#{resource.class.name.underscore}-likes col-1 d-flex justify-content-start align-items-center"
-  i= button_to polymorphic_path(resource, action: :like),
+div class="#{resource.class.name.underscore}-likes-#{resource.id} col-1 d-flex justify-content-start align-items-center"
+  i = button_to polymorphic_path(resource, action: :like),
      remote: true,
      data: { type: :json },
      class: "#{resource.already_liked?(current_user) ? "btn btn-secondary like" : "btn border like"}" do 
       i.fa.fa-thumbs-up
   
-  i= resource.final_rating 
+  i class="final_rating"
+   =resource.final_rating 
 
   i= button_to polymorphic_path(resource, action: :dislike),
      remote: true,

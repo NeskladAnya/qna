@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
   
   resources :questions, concerns: [:likeable] do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+    resources :answers, shallow: true, only: %i[create update destroy], concerns: [:likeable] do
       post :set_best, on: :member
     end
   end

@@ -25,6 +25,7 @@ module Liked
         @likeable.clear_rating(current_user)
         @likeable.dislike(current_user)
       end
+      render_json
     end
   end
 
@@ -35,6 +36,8 @@ module Liked
       if @likeable.save
         format.json do
           render json: { id: @likeable.id, resource: @likeable.class.name.underscore,
+                         liked: @likeable.already_liked?(current_user),
+                         disliked: @likeable.already_disliked?(current_user),
                          final_rating: @likeable.final_rating }
         end
       else
