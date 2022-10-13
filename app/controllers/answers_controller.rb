@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Liked
+  
   before_action :authenticate_user!
   before_action :find_question, only: %i[update destroy set_best]
 

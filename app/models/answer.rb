@@ -1,4 +1,6 @@
 class Answer < ApplicationRecord
+  include Likeable
+
   belongs_to :question
   belongs_to :author, class_name: 'User'
 

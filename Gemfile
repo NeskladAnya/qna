@@ -34,6 +34,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'jquery-rails'
 gem 'bootstrap'
+gem 'font-awesome-rails'
 gem 'cocoon'
 gem 'octokit'
 
