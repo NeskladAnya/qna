@@ -2,7 +2,8 @@ class QuestionsController < ApplicationController
   include Liked
   
   before_action :authenticate_user!, except: %i[index show]
-  
+  after_action :publish_question, only: %i[create]
+
   def index
     @questions = Question.all
   end
@@ -54,6 +55,17 @@ class QuestionsController < ApplicationController
   end
 
   helper_method :question
+
+  def publish_question
+    return if question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: question }
+      )
+    )
+  end
 
   def question_params
     params.require(:question).permit(:title, :body, 

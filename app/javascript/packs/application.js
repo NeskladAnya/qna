@@ -22,4 +22,3 @@ import "likes"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
