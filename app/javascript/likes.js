@@ -17,6 +17,8 @@ $(document).on('turbolinks:load', function(){
         break
       case false:
         resource.find('.like').removeClass('btn-secondary')
+      default:
+        resource.find('.like').addClass('disabled')
     }
 
     switch (vote['disliked']) {
@@ -25,6 +27,8 @@ $(document).on('turbolinks:load', function(){
         break
       case false:
         resource.find('.dislike').removeClass('btn-secondary')
+      default:
+        resource.find('.dislike').addClass('disabled')
     }
   })
     .on('ajax:error', function(e){

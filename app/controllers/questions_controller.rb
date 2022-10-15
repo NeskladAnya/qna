@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
+    gon.current_user_id = current_user&.id
   end
 
   def show
@@ -13,6 +14,8 @@ class QuestionsController < ApplicationController
 
     @best_answer = question.best_answer
     @other_answers = question.answers.where.not(id: question.best_answer_id)
+
+    gon.question_id = @question.id
   end
 
   def new
