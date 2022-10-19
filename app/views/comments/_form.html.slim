@@ -1,0 +1,10 @@
+div class="#{resource.class.to_s.downcase}-#{resource.id}-comment-form"
+  .comment-errors
+    = render 'shared/errors', resource: resource
+
+  = form_with model: Comment.new, url: send("create_comment_#{resource.class.name.downcase}_path", resource), local: false do |f|
+    .mb-3
+      = f.text_area :body, class: "form-control"
+
+    .mb-3
+      = f.submit 'Comment', class: "btn btn-primary"

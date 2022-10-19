@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
   include Liked
+  include Commented
   
   before_action :authenticate_user!, except: %i[index show]
   after_action :publish_question, only: %i[create]

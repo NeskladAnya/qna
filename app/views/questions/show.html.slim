@@ -28,6 +28,12 @@ body class="container"
   .question-files
     = render 'shared/attachments', resource: @question
 
+  .question-comments
+    = render 'comments/comments', resource: @question
+
+    -if user_signed_in?
+      p= render 'comments/form', resource: @question
+    
   .answers
     h2 class="text-center"
       | Answers
