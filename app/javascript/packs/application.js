@@ -18,8 +18,8 @@ import "answers"
 import "questions"
 import "direct_uploads"
 import "likes"
+import "comments"
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-

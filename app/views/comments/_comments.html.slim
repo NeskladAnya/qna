@@ -1,0 +1,5 @@
+ul class="list-group #{resource.class.name.downcase}"
+  - if resource&.comments.present?
+    h4= 'Comments'
+    - resource.comments.each do |comment|
+      = render comment

@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   
   before_action :authenticate_user!
   before_action :find_question, only: %i[update destroy set_best]
+  after_action :publish_answer, only: %i[create]
 
   def create
     @question = Question.find(params[:question_id])
@@ -41,6 +42,15 @@ class AnswersController < ApplicationController
   end
 
   helper_method :answer
+
+  def publish_answer
+    return if answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "questions/#{answer.question_id}",
+      answer: answer
+    )
+  end
 
   def find_question
     @question = answer.question

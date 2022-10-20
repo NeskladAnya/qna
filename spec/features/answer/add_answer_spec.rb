@@ -48,4 +48,32 @@ feature 'An authorized user can add a new answer to the question', %q{
 
     expect(page).to_not have_button 'Add answer'
   end
+
+  describe 'Multiple sessions', js: true do
+    scenario "a new answer appears on another user's page" do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'answer[body]', with: 'Test Answer'
+        click_on 'Add answer'
+
+        expect(current_path).to eq question_path(question)
+
+        within '.answers' do
+          expect(page).to have_content 'Test Answer'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'Test Answer'
+      end
+    end
+  end
 end

@@ -1,10 +1,13 @@
 class QuestionsController < ApplicationController
   include Liked
+  include Commented
   
   before_action :authenticate_user!, except: %i[index show]
-  
+  after_action :publish_question, only: %i[create]
+
   def index
     @questions = Question.all
+    gon.current_user_id = current_user&.id
   end
 
   def show
@@ -12,6 +15,8 @@ class QuestionsController < ApplicationController
 
     @best_answer = question.best_answer
     @other_answers = question.answers.where.not(id: question.best_answer_id)
+
+    gon.question_id = @question.id
   end
 
   def new
@@ -54,6 +59,17 @@ class QuestionsController < ApplicationController
   end
 
   helper_method :question
+
+  def publish_question
+    return if question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: question }
+      )
+    )
+  end
 
   def question_params
     params.require(:question).permit(:title, :body, 

@@ -4,13 +4,9 @@ html
       | All questions
 
   body class="container"
-    - unless @questions.empty?
-      table class="table"
-        tbody
-          = render @questions
-    - else
-      h1 class="text-center"
-        | No questions found
+    table class="table"
+      tbody
+        = render @questions
 
     - if user_signed_in?
         = link_to 'Ask question', new_question_path, class: "btn btn-success"
