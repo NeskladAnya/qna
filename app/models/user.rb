@@ -6,7 +6,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:github]
   
   def author?(resource)
     self.id == resource.author_id
