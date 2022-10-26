@@ -6,7 +6,7 @@ feature 'A user can sign up', %q{
   Then I should be able to sign up
 } do
 
-  describe 'A user signs up with valid data' do  
+  describe 'A user signs up with email and password' do  
     scenario 'the email is not taken' do
       visit new_user_registration_path
 
@@ -17,6 +17,20 @@ feature 'A user can sign up', %q{
       click_button 'Sign up'
 
       expect(page).to have_content 'Welcome! You have signed up successfully.'
+    end
+  end
+
+  describe 'A user signs up using Omniauth' do
+    describe 'Github' do
+      it 'signs up' do
+        visit new_user_registration_path
+        expect(page).to have_content 'Sign in with GitHub'
+
+        mock_auth_hash('github')
+        click_link 'Sign in with GitHub'
+
+        expect(page).to have_content 'Successfully authenticated from Github account.'
+      end
     end
   end
 
