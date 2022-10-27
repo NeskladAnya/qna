@@ -8,5 +8,5 @@ html
       tbody
         = render @questions
 
-    - if user_signed_in?
+    - if can?(:create, Question)
         = link_to 'Ask question', new_question_path, class: "btn btn-success"

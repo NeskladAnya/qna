@@ -13,7 +13,7 @@ body class="container"
     = render 'shared/links', resource: @question
 
   div class="row mb-3"
-    - if current_user&.author?(question)
+    - if can?(:update, Question)
         p= link_to 'Edit question',
                    '#',
                    class: 'edit-question-link btn btn-primary',

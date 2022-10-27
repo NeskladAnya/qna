@@ -39,14 +39,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(question)
-      question.update(question_params)
-    end
+    question.update(question_params)
   end
 
   def destroy
-    if current_user.author?(question)
-      question.destroy
+    if question.destroy
       redirect_to questions_path, notice: 'Question deleted'
     else
       redirect_to question, alert: 'Question cannot be deleted'
