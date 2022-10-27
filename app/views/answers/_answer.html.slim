@@ -5,13 +5,13 @@
           = answer.body
 
         div class="col-6 d-flex justify-content-evenly"
-          -if current_user&.author?(answer.question)
+          - if can?(:set_best, answer)
             = link_to 'Best',
                       set_best_answer_path(answer),
                       method: :post,
                       remote: true,
                       class: "btn btn-success"
-          -if current_user&.author?(answer)
+          - if can?(:update, answer)
             = link_to 'Edit',
                       '#',
                       id: "edit-answer-link",
@@ -33,7 +33,7 @@
         .answer-links 
           = render 'shared/links', resource: answer
       
-      -if current_user&.author?(answer)
+      -if can?(:update, answer)
         = form_with model: answer, class: "hidden", html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
           .mb-3
             = f.label :body, 'Answer', class: "form-label"
