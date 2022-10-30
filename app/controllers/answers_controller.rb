@@ -1,5 +1,7 @@
 class AnswersController < ApplicationController
   include Liked
+
+  authorize_resource
   
   before_action :authenticate_user!
   before_action :find_question, only: %i[update destroy set_best]
@@ -14,24 +16,18 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author?(answer)
-      answer.update(answer_params)
-    end
+    answer.update(answer_params)
   end
 
   def destroy
-    if current_user.author?(answer)
-      answer.destroy
-    end
+    answer.destroy
   end
 
   def set_best
-    if current_user.author?(@question)
-      @question.update(best_answer: answer)
+    @question.update(best_answer: answer)
       if @question.reward.present?
         @question.reward.update(answer: answer, user: current_user)
       end
-    end
 
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)
   end

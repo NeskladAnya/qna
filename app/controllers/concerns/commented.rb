@@ -2,6 +2,7 @@ module Commented
   extend ActiveSupport::Concern
 
   included do
+    authorize_resource
     before_action :set_commentable, only: %i[create_comment render_json]
     after_action :broadcast_comment, only: %i[create_comment]
   end

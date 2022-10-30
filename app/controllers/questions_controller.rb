@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   include Liked
   include Commented
+
+  authorize_resource
   
   before_action :authenticate_user!, except: %i[index show]
   after_action :publish_question, only: %i[create]
@@ -39,14 +41,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(question)
-      question.update(question_params)
-    end
+    question.update(question_params)
   end
 
   def destroy
-    if current_user.author?(question)
-      question.destroy
+    if question.destroy
       redirect_to questions_path, notice: 'Question deleted'
     else
       redirect_to question, alert: 'Question cannot be deleted'

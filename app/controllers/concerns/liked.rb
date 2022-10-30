@@ -6,27 +6,23 @@ module Liked
   end
 
   def like
-    if !current_user.author?(@likeable)
-      if @likeable.already_liked?(current_user)
-        @likeable.clear_rating(current_user)
-      else
-        @likeable.clear_rating(current_user)
-        @likeable.like(current_user)
-      end
-      render_json
+    if @likeable.already_liked?(current_user)
+      @likeable.clear_rating(current_user)
+    else
+      @likeable.clear_rating(current_user)
+      @likeable.like(current_user)
     end
+    render_json
   end
 
   def dislike
-    if !current_user.author?(@likeable)
-      if @likeable.already_disliked?(current_user)
-        @likeable.clear_rating(current_user)
-      else
-        @likeable.clear_rating(current_user)
-        @likeable.dislike(current_user)
-      end
-      render_json
+    if @likeable.already_disliked?(current_user)
+      @likeable.clear_rating(current_user)
+    else
+      @likeable.clear_rating(current_user)
+      @likeable.dislike(current_user)
     end
+    render_json
   end
 
   private
