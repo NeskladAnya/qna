@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       end
 
       resources :questions, only: [:index]
+
+      resources :users, only: [:index]
     end
   end
 
