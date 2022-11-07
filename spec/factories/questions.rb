@@ -19,6 +19,18 @@ FactoryBot.define do
       end
     end
 
+    trait :with_comments do
+      after(:create) do |question|
+        create(:comment, commentable: question)
+      end
+    end
+
+    trait :with_reward do
+      after(:create) do |question|
+        create(:reward, question: question)
+      end
+    end
+
     trait :invalid do
       title { nil }
     end
