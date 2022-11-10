@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   include Liked
   include Commented
+  include Subscribed
 
   authorize_resource
   
@@ -31,6 +32,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.build(question_params)
 
     if @question.save
+      @question.add_subscription(current_user)
       redirect_to @question, notice: 'Question created'
     else
       render :new

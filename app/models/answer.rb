@@ -11,4 +11,12 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank
 
   validates :body, :question_id, :author_id, presence: true
+
+  after_create :send_notifications
+
+  private
+
+  def send_notifications
+    NotificationJob.perform_later(self)
+  end
 end

@@ -34,8 +34,15 @@ Rails.application.routes.draw do
       post :create_comment
     end
   end
+
+  concern :subscribable do
+    member do
+      post :subscribe
+      post :unsubscribe
+    end
+  end
   
-  resources :questions, concerns: %i[likeable commentable] do
+  resources :questions, concerns: %i[likeable commentable subscribable] do
     resources :answers, shallow: true, only: %i[create update destroy], concerns: %i[likeable commentable] do
       post :set_best, on: :member
     end

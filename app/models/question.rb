@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   include Likeable
   include Commentable
+  include Subscribable
   
   has_many :answers, dependent: :destroy
   has_many :links, as: :linkable, dependent: :destroy
+  has_many :subscriptions, as: :subscribable, dependent: :destroy
   has_one :reward, dependent: :destroy
   
   belongs_to :author, class_name: 'User'

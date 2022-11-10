@@ -27,6 +27,9 @@ class Ability
       !user.author?(likeable)
     end
 
+    can :subscribe, [Question]
+    can :unsubscribe, [Question]
+
     can :update, [Question, Answer], author_id: user.id
     can :set_best, Answer, question: { author_id: user.id }
 
