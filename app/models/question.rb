@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   include Likeable
   include Commentable
+  include Subscribable
   
   has_many :answers, dependent: :destroy
   has_many :links, as: :linkable, dependent: :destroy
+  has_many :subscriptions, as: :subscribable, dependent: :destroy
   has_one :reward, dependent: :destroy
   
   belongs_to :author, class_name: 'User'
@@ -16,4 +18,12 @@ class Question < ApplicationRecord
 
   validates :title, :body, :author_id, presence: true
   validates :title, length: { minimum: 5 }
+
+  after_create :calculate_reputation
+
+  private
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end

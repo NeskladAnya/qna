@@ -3,6 +3,12 @@ FactoryBot.define do
     title { "MyString" }
     body { "MyText" }
     author factory: :user
+
+    trait :with_subscription do
+      after(:create) do |question|
+        create(:subscription, subscribable: question)
+      end
+    end
     
     trait :with_attached_files do
       after(:create) do |question|
