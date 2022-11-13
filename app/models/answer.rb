@@ -14,6 +14,10 @@ class Answer < ApplicationRecord
 
   after_create :send_notifications
 
+  ThinkingSphinx::Callbacks.append(
+    self, behaviours: [:sql]
+  )
+
   private
 
   def send_notifications

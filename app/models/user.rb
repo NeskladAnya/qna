@@ -11,7 +11,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[github google_oauth2]
   
-  def author?(resource)
+ThinkingSphinx::Callbacks.append(
+  self, behaviours: [:sql]
+)
+  
+         def author?(resource)
     self.id == resource.author_id
   end
 
