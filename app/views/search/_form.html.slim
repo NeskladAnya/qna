@@ -1,0 +1,12 @@
+form.d-flex.flex-grow-1.me-2 action="/search" method="get"
+  input.form-control.mr-sm-2 type="search" placeholder="Search" aria-label="Search" name="context"
+
+  select.form-select.me-2 name="option"
+    option value="global" selected="selected" Global search
+    option value="question" Questions
+    option value="answer" Answers
+    option value="user" Users
+    option value="comment" Comments
+
+  button.btn.btn-sm.btn-outline-secondary[type="submit"]
+    | Search

@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
   resources :rewards, only: %i[index]
 
+  get '/search', to: 'search#search'
+
   root to: 'questions#index'
 
   mount ActionCable.server => '/cable'

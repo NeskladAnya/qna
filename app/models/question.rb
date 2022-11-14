@@ -21,6 +21,10 @@ class Question < ApplicationRecord
 
   after_create :calculate_reputation
 
+  ThinkingSphinx::Callbacks.append(
+    self, behaviours: [:sql]
+  )
+
   private
 
   def calculate_reputation

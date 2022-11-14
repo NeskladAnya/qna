@@ -1,5 +1,6 @@
 nav class="navbar bg-light"
   div class="container-fluid"
+    = render 'search/form'
     - if user_signed_in?
         a
           = link_to 'Rewards', rewards_path, class: "nav-link"
