@@ -51,7 +51,7 @@ gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
-gem 'mini_racer', platforms: :ruby
+gem 'mini_racer', '~> 0.3.1'
 gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
