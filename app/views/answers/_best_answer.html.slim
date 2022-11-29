@@ -1,47 +1,48 @@
 - if resource&.persisted?
-    li class="list-group-item list-group-item-warning"
-      h3= "Best answer"
+  - cache resource do
+      li class="list-group-item list-group-item-warning"
+        h3= "Best answer"
 
-      div class="row mb-3"
-        div class="col-6 d-flex justify-content-start align-items-center"
-          = resource.body
+        div class="row mb-3"
+          div class="col-6 d-flex justify-content-start align-items-center"
+            = resource.body
 
-        div class="col-6 d-flex justify-content-evenly"
-          - if can?(:update, resource)
-            = link_to 'Edit',
-                      '#',
-                      data: {answer_id: resource.id },
-                      class: "btn btn-primary edit-answer-link"
-            = link_to 'Delete',
-                      answer_path(resource),
-                      method: :delete,
-                      remote: true,
-                      class: "btn btn-danger"
-          = render 'shared/likes', resource: resource
+          div class="col-6 d-flex justify-content-evenly"
+            - if can?(:update, resource)
+              = link_to 'Edit',
+                        '#',
+                        data: {answer_id: resource.id },
+                        class: "btn btn-primary edit-answer-link"
+              = link_to 'Delete',
+                        answer_path(resource),
+                        method: :delete,
+                        remote: true,
+                        class: "btn btn-danger"
+            = render 'shared/likes', resource: resource
 
-      ul class="list-group"
-        .best-answer-files
-          = render 'shared/attachments', resource: resource
+        ul class="list-group"
+          .best-answer-files
+            = render 'shared/attachments', resource: resource
 
-      ul class="list-group"
-        .best-answer-links 
-          = render 'shared/links', resource: resource
+        ul class="list-group"
+          .best-answer-links 
+            = render 'shared/links', resource: resource
 
-      - if can?(:update, resource)
-        = form_with model: resource, class: "hidden", html: { id: "edit-answer-#{resource.id}" }, local: false do |f|
-          .mb-3
-            = f.label :body, 'Answer', class: "form-label"
-            = f.text_area :body, class: "form-control"
+        - if can?(:update, resource)
+          = form_with model: resource, class: "hidden", html: { id: "edit-answer-#{resource.id}" }, local: false do |f|
+            .mb-3
+              = f.label :body, 'Answer', class: "form-label"
+              = f.text_area :body, class: "form-control"
 
-          .mb-3
-            = f.file_field :files, multiple: true, class: "form-control"
+            .mb-3
+              = f.file_field :files, multiple: true, class: "form-control"
 
-          h3
-            | Links 
-          
-          = render 'links/link', f: f
-
-          .mb-3
-            = f.submit 'Save', class: "btn btn-primary"
+            h3
+              | Links 
             
-    hr
+            = render 'links/link', f: f
+
+            .mb-3
+              = f.submit 'Save', class: "btn btn-primary"
+              
+      hr

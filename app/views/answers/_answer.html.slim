@@ -1,54 +1,55 @@
 -if answer.persisted?
-  li class="list-group-item" id="answer-#{answer.id}"
-      div class="row mb-3"
-        div class="col-6 d-flex justify-content-start align-items-center"
-          = answer.body
+  - cache answer do
+    li class="list-group-item" id="answer-#{answer.id}"
+        div class="row mb-3"
+          div class="col-6 d-flex justify-content-start align-items-center"
+            = answer.body
 
-        div class="col-6 d-flex justify-content-evenly"
-          - if can?(:set_best, answer)
-            = link_to 'Best',
-                      set_best_answer_path(answer),
-                      method: :post,
-                      remote: true,
-                      class: "btn btn-success"
-          - if can?(:update, answer)
-            = link_to 'Edit',
-                      '#',
-                      id: "edit-answer-link",
-                      data: {answer_id: answer.id},
-                      class: "btn btn-primary edit-answer-link"
-            = link_to 'Delete',
-                      answer_path(answer),
-                      method: :delete,
-                      remote: true,
-                      class: "btn btn-danger"
+          div class="col-6 d-flex justify-content-evenly"
+            - if can?(:set_best, answer)
+              = link_to 'Best',
+                        set_best_answer_path(answer),
+                        method: :post,
+                        remote: true,
+                        class: "btn btn-success"
+            - if can?(:update, answer)
+              = link_to 'Edit',
+                        '#',
+                        id: "edit-answer-link",
+                        data: {answer_id: answer.id},
+                        class: "btn btn-primary edit-answer-link"
+              = link_to 'Delete',
+                        answer_path(answer),
+                        method: :delete,
+                        remote: true,
+                        class: "btn btn-danger"
 
-          = render 'shared/likes', resource: answer
+            = render 'shared/likes', resource: answer
 
-      ul class="list-group"
-        .answer-files
-          = render 'shared/attachments', resource: answer
-      
-      ul class="list-group"
-        .answer-links 
-          = render 'shared/links', resource: answer
-      
-      -if can?(:update, answer)
-        = form_with model: answer, class: "hidden", html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
-          .mb-3
-            = f.label :body, 'Answer', class: "form-label"
-            = f.text_area :body, class: "form-control"
+        ul class="list-group"
+          .answer-files
+            = render 'shared/attachments', resource: answer
+        
+        ul class="list-group"
+          .answer-links 
+            = render 'shared/links', resource: answer
+        
+        -if can?(:update, answer)
+          = form_with model: answer, class: "hidden", html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+            .mb-3
+              = f.label :body, 'Answer', class: "form-label"
+              = f.text_area :body, class: "form-control"
 
-          .mb-3
-            = f.file_field :files, multiple: true, class: "form-control"
+            .mb-3
+              = f.file_field :files, multiple: true, class: "form-control"
 
-          h3
-            | Links 
-          
-          = render 'links/link', f: f
+            h3
+              | Links 
+            
+            = render 'links/link', f: f
 
-          .mb-3
-            = f.submit 'Save', class: "btn btn-primary"
+            .mb-3
+              = f.submit 'Save', class: "btn btn-primary"
 
   
     
